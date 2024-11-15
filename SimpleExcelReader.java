@@ -20,14 +20,25 @@ public class SimpleExcelReader {
                     continue;
                 }
 
-                // Split the line by commas
-                String[] values = line.split(",");
-
-                // Print values with tab as a delimiter
-                for (String value : values) {
-                    System.out.print(value.trim() + "\t");
+                // Ensure the line has at least one comma (ID and content)
+                if (!line.contains(",")) {
+                    System.out.println("Malformed line (missing comma): " + line);
+                    continue;
                 }
-                System.out.println(); // Move to the next line after each row
+
+                // Extract the ID and content
+                String idPart = line.substring(0, line.indexOf(',')).trim();
+                String contentPart = line.substring(line.indexOf(',') + 1).trim();
+
+                try {
+                    // Parse the ID to an integer
+                    int id = Integer.parseInt(idPart);
+
+                    // Print the ID and content
+                    System.out.println("ID: " + id + " | Content: " + contentPart);
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid ID format: " + idPart + " in line: " + line);
+                }
             }
 
         } catch (IOException e) {
