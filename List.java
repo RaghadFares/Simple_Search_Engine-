@@ -1,4 +1,3 @@
-//  List interface with common list operations
 public interface List<T> {
     boolean empty();
     boolean last();

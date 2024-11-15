@@ -5,7 +5,7 @@ public class LinkedListTest {
 
         // Test 1: Check if the list is initially empty
         System.out.println("Is the list empty? " + list.empty()); // Expected: true
-
+// ---
         // Test 2: Insert elements into the list
         list.insert(10);
         list.insert(20);

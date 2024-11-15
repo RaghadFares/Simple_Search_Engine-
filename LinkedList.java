@@ -87,7 +87,7 @@ public class LinkedList<T> implements List<T> {
             }
         }
     }
-
+//----
     // Display function to print all elements in the list
     public void display() {
         Node<T> temp = head; // Start from the head node
