@@ -1,46 +1,59 @@
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
-class SimpleExcelReader {
-// the reader
-    // Method to read the dataset.csv and return document data
-    public static String[][] readDataset(String filePath) {
-        String[][] dataset = new String[100][2]; // Assume max 100 documents, change as needed
-        int index = 0;
+public class SimpleExcelReader {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",", 2); // Split by the first comma
-                if (parts.length >= 2) {
-                    dataset[index][0] = parts[0].trim(); // Document ID
-                    dataset[index][1] = parts[1].trim(); // Document content
-                    index++;
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading the file: " + e.getMessage());
+    // Method to read the dataset.csv and return an array of documents (document ID and content)
+    public static String[][] readDataset(String filePath) throws FileNotFoundException {
+        File file = new File(filePath);
+        Scanner scanner = new Scanner(file);
+        int lines = 0;
+
+        // Count the number of lines to initialize the 2D array
+        while (scanner.hasNextLine()) {
+            lines++;
+            scanner.nextLine();
         }
 
+        String[][] dataset = new String[lines][2];
+        scanner.close();
+
+        scanner = new Scanner(file);
+        int index = 0;
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            String[] parts = line.split(",", 2); // Split by the first comma
+            dataset[index][0] = parts[0].trim(); // Document ID
+            dataset[index][1] = parts[1].trim(); // Content
+            index++;
+        }
+        scanner.close();
         return dataset;
     }
 
-    // Method to read the stop words file and return them as a string array
-    public static String[] readStopWords(String filePath) {
-        String[] stopWords = new String[100]; // Assume max 100 stop words, change as needed
-        int index = 0;
+    // Method to read the stop.txt file and return stop words as an array
+    public static String[] readStopWords(String filePath) throws FileNotFoundException {
+        File file = new File(filePath);
+        Scanner scanner = new Scanner(file);
+        int lines = 0;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                stopWords[index] = line.trim().toLowerCase(); // Store stop words in lowercase
-                index++;
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading the file: " + e.getMessage());
+        // Count the number of stop words
+        while (scanner.hasNextLine()) {
+            lines++;
+            scanner.nextLine();
         }
 
+        String[] stopWords = new String[lines];
+        scanner.close();
+
+        scanner = new Scanner(file);
+        int index = 0;
+        while (scanner.hasNextLine()) {
+            stopWords[index] = scanner.nextLine().trim().toLowerCase();
+            index++;
+        }
+        scanner.close();
         return stopWords;
     }
 }
