@@ -11,7 +11,7 @@ public class SimpleExcelReader {
             Scanner scanner = new Scanner(file);
             int lines = 0;
 
-            // Count the number of lines, skipping empty or invalid lines
+            // Count the number of valid lines, skipping empty or invalid lines
             boolean firstLine = true; // Flag to skip the header row
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
@@ -34,7 +34,7 @@ public class SimpleExcelReader {
                 if (!line.isEmpty() && !firstLine) {
                     // Split line by the first comma and process it
                     String[] parts = line.split(",", 2);
-                    if (parts.length == 2) {
+                    if (parts.length == 2 && !parts[0].isEmpty() && !parts[1].isEmpty()) {
                         try {
                             dataset[index][0] = parts[0].trim(); // Document ID
                             dataset[index][1] = parts[1].trim(); // Content
