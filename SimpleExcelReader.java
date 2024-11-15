@@ -35,13 +35,9 @@ public class SimpleExcelReader {
                     // Split line by the first comma and process it
                     String[] parts = line.split(",", 2);
                     if (parts.length == 2 && !parts[0].isEmpty() && !parts[1].isEmpty()) {
-                        try {
-                            dataset[index][0] = parts[0].trim(); // Document ID
-                            dataset[index][1] = parts[1].trim(); // Content
-                            index++;
-                        } catch (NumberFormatException e) {
-                            System.err.println("Invalid document ID format in line: " + line);
-                        }
+                        dataset[index][0] = parts[0].trim(); // Document ID
+                        dataset[index][1] = parts[1].trim(); // Content
+                        index++;
                     }
                 }
                 firstLine = false;
