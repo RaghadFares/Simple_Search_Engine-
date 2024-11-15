@@ -1,7 +1,7 @@
 
 public class LinkedList<T> implements List<T> {
-    private Node<T> head;    // Head of the list
-    private Node<T> current; // Pointer to the current node
+    Node<T> head;    // Head of the list
+    Node<T> current; // Pointer to the current node
 
     // Constructor to initialize an empty list
     public LinkedList() {
