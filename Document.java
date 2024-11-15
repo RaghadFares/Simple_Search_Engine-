@@ -1,5 +1,5 @@
 import java.util.LinkedList;
-
+//
 class Document {
     int id; // ID of the document
     LinkedList<String> words; // List of words in the document
