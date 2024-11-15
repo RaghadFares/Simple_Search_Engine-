@@ -4,7 +4,8 @@ import java.io.IOException;
 
 public class SimpleExcelReader {
 
-    public static void load(String fileName) {
+    // Method to load and process a file with commas
+    public static void loadFileWithCommas(String fileName) {
         BufferedReader reader = null;
 
         try {
@@ -55,9 +56,50 @@ public class SimpleExcelReader {
         }
     }
 
+    // Method to load and process a file without commas
+    public static void loadFileWithoutCommas(String fileName) {
+        BufferedReader reader = null;
+
+        try {
+            // Open the file for reading
+            reader = new BufferedReader(new FileReader(fileName));
+            String line;
+
+            // Read the file line by line
+            while ((line = reader.readLine()) != null) {
+                // Skip empty lines
+                if (line.trim().isEmpty()) {
+                    System.out.println("Empty line found, skipping...");
+                    continue;
+                }
+
+                // Print the line directly (assuming it's the stop word or a single column)
+                System.out.println("Content: " + line.trim());
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading the file: " + e.getMessage());
+        } finally {
+            // Close the reader
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    System.out.println("Error closing the file: " + e.getMessage());
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
-        // Provide the path to your CSV file
-        String filePath = "dataset.csv"; // File name is "dataset.csv"
-        load(filePath); // Call the load method with the file path
+        // File paths
+        String filePath1 = "dataset.csv"; // File with commas
+        String filePath2 = "stop.txt";   // File without commas
+
+        System.out.println("Reading from file with commas: " + filePath1);
+        loadFileWithCommas(filePath1); // Call the method for files with commas
+
+        System.out.println("\nReading from file without commas: " + filePath2);
+        loadFileWithoutCommas(filePath2); // Call the method for files without commas
     }
 }
