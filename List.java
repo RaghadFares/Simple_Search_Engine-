@@ -9,5 +9,6 @@ public interface List<T> {
     void update(T val);
     void insert(T val);
     void remove();
+    void display();
 }
 

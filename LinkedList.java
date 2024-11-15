@@ -87,4 +87,15 @@ public class LinkedList<T> implements List<T> {
             }
         }
     }
+
+    // Display function to print all elements in the list
+    public void display() {
+        Node<T> temp = head; // Start from the head node
+        while (temp != null) {
+            System.out.print(temp.data + " "); // Print current node data
+            temp = temp.next; // Move to the next node
+        }
+        System.out.println(); // New line after the list is printed
+    }
+
 }
