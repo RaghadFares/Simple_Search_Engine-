@@ -87,7 +87,7 @@ public class SimpleExcelReader {
         }
     }
 
-    // Method to process documents and remove stop words
+    // Method to process documents and remove stop words manually (without collections)
     public static void processDocuments(String[][] dataset, String[] stopWords) {
         // Ensure dataset is not empty
         if (dataset.length == 0) {
@@ -95,14 +95,14 @@ public class SimpleExcelReader {
             return;
         }
 
-        // Process each document
+        // Process each document manually
         for (int i = 0; i < dataset.length; i++) {
             try {
                 if (dataset[i][0] != null && !dataset[i][0].isEmpty() && dataset[i][1] != null && !dataset[i][1].isEmpty()) {
                     int docId = Integer.parseInt(dataset[i][0]); // Document ID
                     String content = dataset[i][1]; // Content of the document
 
-                    // Create Document object
+                    // Create Document object (Assume Document class is defined elsewhere)
                     Document document = new Document(docId, content);
 
                     // Remove stop words
@@ -121,8 +121,8 @@ public class SimpleExcelReader {
 
     // Main method for testing
     public static void main(String[] args) {
-        String datasetFilePath = "dataset.csv";
-        String stopWordsFilePath = "stop.txt";
+        String datasetFilePath = "dataset.csv"; // Path to your CSV file
+        String stopWordsFilePath = "stop.txt";   // Path to your stop words file
 
         // Read the dataset and stop words
         String[][] dataset = readDataset(datasetFilePath);
