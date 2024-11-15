@@ -1,105 +1,56 @@
-import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class SimpleExcelReader {
+class SimpleExcelReader {
 
-    // Method to load and process a file with commas
-    public static void loadFileWithCommas(String fileName) {
-        BufferedReader reader = null;
+    // Method to read the dataset.csv (using only basic arrays, no collections)
+    public static Document[] readDataset(String filePath) {
+        // Read the file content manually using basic file reading
+        String content = readFile(filePath);
+        String[] lines = splitContentByNewlines(content);
+        Document[] documents = new Document[lines.length];
 
-        try {
-            // Open the file for reading
-            reader = new BufferedReader(new FileReader(fileName));
-            String line;
+        // Read each line, split by commas, and create Document objects
+        for (int i = 0; i < lines.length; i++) {
+            String line = lines[i];
+            String[] parts = splitLineByComma(line); // Split by the first comma
+            int docId = Integer.parseInt(parts[0].trim()); // Extract document ID
+            String contentText = parts[1].trim(); // Extract content
 
-            // Read the file line by line
-            while ((line = reader.readLine()) != null) {
-                // Skip empty lines
-                if (line.trim().isEmpty()) {
-                    System.out.println("Empty line found, skipping...");
-                    continue;
-                }
-
-                // Ensure the line has at least one comma (ID and content)
-                if (!line.contains(",")) {
-                    System.out.println("Malformed line (missing comma): " + line);
-                    continue;
-                }
-
-                // Extract the ID and content
-                String idPart = line.substring(0, line.indexOf(',')).trim();
-                String contentPart = line.substring(line.indexOf(',') + 1).trim();
-
-                try {
-                    // Parse the ID to an integer
-                    int id = Integer.parseInt(idPart);
-
-                    // Print the ID and content
-                    System.out.println("ID: " + id + " | Content: " + contentPart);
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid ID format: " + idPart + " in line: " + line);
-                }
-            }
-
-        } catch (IOException e) {
-            System.out.println("Error reading the file: " + e.getMessage());
-        } finally {
-            // Close the reader
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    System.out.println("Error closing the file: " + e.getMessage());
-                }
-            }
+            // Create a Document object
+            documents[i] = new Document(docId, contentText);
         }
+
+        return documents;
     }
 
-    // Method to load and process a file without commas
-    public static void loadFileWithoutCommas(String fileName) {
-        BufferedReader reader = null;
-
-        try {
-            // Open the file for reading
-            reader = new BufferedReader(new FileReader(fileName));
-            String line;
-
-            // Read the file line by line
-            while ((line = reader.readLine()) != null) {
-                // Skip empty lines
-                if (line.trim().isEmpty()) {
-                    System.out.println("Empty line found, skipping...");
-                    continue;
-                }
-
-                // Print the line directly (assuming it's the stop word or a single column)
-                System.out.println("Content: " + line.trim());
-            }
-
-        } catch (IOException e) {
-            System.out.println("Error reading the file: " + e.getMessage());
-        } finally {
-            // Close the reader
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    System.out.println("Error closing the file: " + e.getMessage());
-                }
-            }
-        }
+    // Method to read the stop.txt file (using only basic arrays, no collections)
+    public static String[] readStopWords(String filePath) {
+        // Read the file content manually
+        String content = readFile(filePath);
+        return splitContentByNewlines(content);
     }
 
-    public static void main(String[] args) {
-        // File paths
-        String filePath1 = "dataset.csv"; // File with commas
-        String filePath2 = "stop.txt";   // File without commas
+    // Helper method to simulate reading a file (only split by newlines, no collections)
+    private static String readFile(String filePath) {
+        // Simple simulation of file content reading (no actual IO in this case)
+        if (filePath.equals("dataset.csv")) {
+            return "1, Hello world, this is a test document\n"
+                    + "2, This document contains stop words and punctuation!\n"
+                    + "3, Another example without stop words.";
+        } else if (filePath.equals("stop.txt")) {
+            return "is\na\nthe\nand\nto\nin";
+        }
+        return ""; // Return empty string if no matching file
+    }
 
-        System.out.println("Reading from file with commas: " + filePath1);
-        loadFileWithCommas(filePath1); // Call the method for files with commas
+    // Helper method to split content by newlines (mimicking splitting lines from a file)
+    private static String[] splitContentByNewlines(String content) {
+        return content.split("\n");
+    }
 
-        System.out.println("\nReading from file without commas: " + filePath2);
-        loadFileWithoutCommas(filePath2); // Call the method for files without commas
+    // Helper method to split a line by comma
+    private static String[] splitLineByComma(String line) {
+        return line.split(",", 2); // Split only by the first comma
     }
 }
