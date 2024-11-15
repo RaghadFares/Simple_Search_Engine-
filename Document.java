@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Document {
     int id; // Document ID
     LinkedList<String> words; // LinkedList to store words in the document
@@ -22,7 +20,7 @@ public class Document {
         // Split the content into words based on whitespace
         String[] wordArray = content.split("\\s+");
 
-        // Add words to the LinkedList using insert() method
+        // Add words to the LinkedList
         for (String word : wordArray) {
             words.insert(word);  // Use insert() to add word to the linked list
         }
@@ -33,19 +31,28 @@ public class Document {
         return text.replaceAll("[^a-zA-Z0-9\\s]", ""); // Remove punctuation and special characters
     }
 
-    // Method to process and remove stop words from the document
+    // Method to remove stop words from the document
     public void removeStopWords(String[] stopWords) {
         LinkedList<String> filteredWords = new LinkedList<String>();
 
         // Iterate through the words and remove stop words
-        words.findFirst(); // Set the current pointer to the first element
-        while (words.current != null) {
+        words.findFirst();
+        while (words.retrieve() != null) {
             String word = words.retrieve();
-            boolean isStopWord = Arrays.asList(stopWords).contains(word);
-            if (!isStopWord) {
-                filteredWords.insert(word);
+            boolean isStopWord = false;
+
+            // Check if the word is a stop word
+            for (String stopWord : stopWords) {
+                if (word.equals(stopWord)) {
+                    isStopWord = true;
+                    break;
+                }
             }
-            words.findNext(); // Move to the next word
+
+            if (!isStopWord) {
+                filteredWords.insert(word); // Only add non-stop words
+            }
+            words.findNext();
         }
 
         // Update the LinkedList with the filtered words (without stop words)

@@ -8,6 +8,7 @@ public class Word {
         this.documentIds = new LinkedList<>();
     }
 
+
     // Method to add a document ID if it's not already in the list
     public void addDocumentId(int docId) {
         if (!isDocumentIdPresent(docId)) { // Add only if not present
