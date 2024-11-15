@@ -58,10 +58,12 @@ public class SimpleExcelReader {
             Scanner scanner = new Scanner(file);
             int lines = 0;
 
-            // Count the number of stop words
+            // Count the number of stop words, skipping empty lines
             while (scanner.hasNextLine()) {
-                lines++;
-                scanner.nextLine();
+                String line = scanner.nextLine().trim();
+                if (!line.isEmpty()) {
+                    lines++;  // Increment only for valid stop words
+                }
             }
 
             String[] stopWords = new String[lines];
@@ -70,8 +72,11 @@ public class SimpleExcelReader {
             scanner = new Scanner(file);
             int index = 0;
             while (scanner.hasNextLine()) {
-                stopWords[index] = scanner.nextLine().trim().toLowerCase();
-                index++;
+                String line = scanner.nextLine().trim();
+                if (!line.isEmpty()) {  // Only process non-empty lines
+                    stopWords[index] = line.toLowerCase(); // Store stop words in lowercase
+                    index++;
+                }
             }
             scanner.close();
             return stopWords;
@@ -80,5 +85,50 @@ public class SimpleExcelReader {
             e.printStackTrace();
             return new String[0]; // Return an empty array on error
         }
+    }
+
+    // Method to process documents and remove stop words
+    public static void processDocuments(String[][] dataset, String[] stopWords) {
+        // Ensure dataset is not empty
+        if (dataset.length == 0) {
+            System.err.println("No valid documents found in dataset.");
+            return;
+        }
+
+        // Process each document
+        for (int i = 0; i < dataset.length; i++) {
+            try {
+                if (dataset[i][0] != null && !dataset[i][0].isEmpty() && dataset[i][1] != null && !dataset[i][1].isEmpty()) {
+                    int docId = Integer.parseInt(dataset[i][0]); // Document ID
+                    String content = dataset[i][1]; // Content of the document
+
+                    // Create Document object
+                    Document document = new Document(docId, content);
+
+                    // Remove stop words
+                    document.removeStopWords(stopWords);
+
+                    // Display processed document
+                    document.displayDocument();
+                } else {
+                    System.err.println("Skipping invalid document at index " + i);
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid document ID format in line: " + dataset[i][0]);
+            }
+        }
+    }
+
+    // Main method for testing
+    public static void main(String[] args) {
+        String datasetFilePath = "dataset.csv";
+        String stopWordsFilePath = "stop.txt";
+
+        // Read the dataset and stop words
+        String[][] dataset = readDataset(datasetFilePath);
+        String[] stopWords = readStopWords(stopWordsFilePath);
+
+        // Process the documents
+        processDocuments(dataset, stopWords);
     }
 }
