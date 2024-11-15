@@ -11,7 +11,7 @@ public class SimpleExcelReader {
             Scanner scanner = new Scanner(file);
             int lines = 0;
 
-            // Count the number of lines to initialize the 2D array, skipping header row
+            // Count the number of lines, skipping empty or invalid lines
             boolean firstLine = true; // Flag to skip the header row
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
@@ -32,10 +32,17 @@ public class SimpleExcelReader {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (!line.isEmpty() && !firstLine) {
-                    String[] parts = line.split(",", 2); // Split by the first comma
-                    dataset[index][0] = parts[0].trim(); // Document ID
-                    dataset[index][1] = parts[1].trim(); // Content
-                    index++;
+                    // Split line by the first comma and process it
+                    String[] parts = line.split(",", 2);
+                    if (parts.length == 2) {
+                        try {
+                            dataset[index][0] = parts[0].trim(); // Document ID
+                            dataset[index][1] = parts[1].trim(); // Content
+                            index++;
+                        } catch (NumberFormatException e) {
+                            System.err.println("Invalid document ID format in line: " + line);
+                        }
+                    }
                 }
                 firstLine = false;
             }
