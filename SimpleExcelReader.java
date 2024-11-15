@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class SimpleExcelReader {
-// this is the reader !
+
     // Method to read the dataset.csv and return an array of documents (document ID and content)
     public static String[][] readDataset(String filePath) {
         try {
