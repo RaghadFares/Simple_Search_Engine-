@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Document {
     int id; // Document ID
     LinkedList<String> words; // LinkedList to store words in the document
@@ -35,26 +37,15 @@ public class Document {
     public void removeStopWords(String[] stopWords) {
         LinkedList<String> filteredWords = new LinkedList<String>();
 
-        // Iterate through the words using findFirst() and findNext()
-        words.findFirst();  // Start from the first word
-        while (words.retrieve() != null) {  // While there is a current word
+        // Iterate through the words and remove stop words
+        words.findFirst(); // Set the current pointer to the first element
+        while (words.current != null) {
             String word = words.retrieve();
-            boolean isStopWord = false;
-
-            // Check if the word is a stop word
-            for (String stopWord : stopWords) {
-                if (word.equals(stopWord)) {
-                    isStopWord = true;
-                    break;
-                }
-            }
-
-            // If it's not a stop word, add it to the filtered list
+            boolean isStopWord = Arrays.asList(stopWords).contains(word);
             if (!isStopWord) {
                 filteredWords.insert(word);
             }
-
-            words.findNext();  // Move to the next word
+            words.findNext(); // Move to the next word
         }
 
         // Update the LinkedList with the filtered words (without stop words)
@@ -65,11 +56,7 @@ public class Document {
     public void displayDocument() {
         System.out.println("Document ID: " + id);
         System.out.print("Processed Content: ");
-        words.findFirst();  // Start from the first word
-        while (words.retrieve() != null) {  // While there is a current word
-            System.out.print(words.retrieve() + " ");  // Print the current word
-            words.findNext();  // Move to the next word
-        }
-        System.out.println("\n-----------------------------");
+        words.display();  // Display the words in the linked list
+        System.out.println("-----------------------------");
     }
 }
