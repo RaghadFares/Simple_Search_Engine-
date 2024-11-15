@@ -48,7 +48,7 @@ public class LinkedList<T> implements List<T> {
     }
 
     // Inserts a new node after the current node
-    public void insert(T val) {
+   /* public void insert(T val) {
         Node<T> tmp;
         if (empty()) {
             // If list is empty, the new node becomes both head and current
@@ -60,7 +60,23 @@ public class LinkedList<T> implements List<T> {
             current = current.next;
             current.next = tmp;
         }
+    }*/
+    public void insert(T data) {
+        Node<T> newNode = new Node<>(data); // Create a new node with the given data
+        if (head == null) {
+            // If the list is empty, make the new node the head
+            head = newNode;
+            current = head;
+        } else {
+            // If the list is not empty, traverse to the end and insert the new node
+            Node<T> temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newNode; // Add the new node at the end
+        }
     }
+
 
     // Removes the current node from the list
     public void remove() {
