@@ -1,4 +1,4 @@
- public class Word {
+public class Word {
     String wordText; // The word itself
     LinkedList<Integer> documentIds; // Custom LinkedList
 
@@ -6,6 +6,17 @@
     public Word(String word) {
         this.wordText = word;
         this.documentIds = new LinkedList<>();
+    }
+
+    // Method to add a document ID if it's not already in the list
+    public void addDocumentId(int docId) {
+        if (!isDocumentIdPresent(docId)) { // Add only if not present
+            if (documentIds.empty()) {
+                documentIds.insert(docId); // Insert into empty list
+            } else {
+                documentIds.insert(docId); // Insert at the current position
+            }
+        }
     }
 
     // Check if a document ID is present using manual traversal
