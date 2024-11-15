@@ -1,3 +1,4 @@
+// the new Document class
 class Document {
     int id; // ID of the document
     String content; // Content of the document (as a string)
