@@ -1,7 +1,7 @@
 public class Document {
     int id; // Document ID
     LinkedList<String> words; // LinkedList to store words in the document
-
+// :
     // Constructor to initialize the document with an ID and content
     public Document(int id, String content) {
         this.id = id;
