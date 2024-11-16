@@ -2,7 +2,7 @@
 public class LinkedList<T> implements List<T> {
     Node<T> head;    // Head of the list
     Node<T> current; // Pointer to the current node
-// our linkedlist
+// our linkedlist :)
     // Constructor to initialize an empty list
     public LinkedList() {
         head = current = null;
