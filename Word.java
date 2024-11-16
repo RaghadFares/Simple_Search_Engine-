@@ -1,41 +1,30 @@
 public class Word {
-    String wordText;      // The word itself
-    int[] documentIds;    // Array to store document IDs
-    int size;             // Number of document IDs currently stored
+    String wordText;              // The word itself
+    LinkedList<Integer> documentIds; // LinkedList to store document IDs
 
     // Constructor to initialize the word and document IDs
     public Word(String word) {
         this.wordText = word;
-        this.documentIds = new int[10]; // Initial size of 10, can be resized if necessary
-        this.size = 0;
+        this.documentIds = new LinkedList<>(); // Initialize an empty LinkedList
     }
 
     // Method to add a document ID if it's not already in the list
     public void addDocumentId(int docId) {
         if (!isDocumentIdPresent(docId)) {
-            if (size == documentIds.length) {
-                resize(); // Resize the array if full
-            }
-            documentIds[size++] = docId; // Add document ID to the list
+            documentIds.insert(docId); // Add document ID using your LinkedList's insert method
         }
     }
 
     // Method to check if a document ID is already in the list
     public boolean isDocumentIdPresent(int docId) {
-        for (int i = 0; i < size; i++) {
-            if (documentIds[i] == docId) {
+        documentIds.findFirst();
+        while (documentIds.retrieve() != null) {
+            if (documentIds.retrieve() == docId) {
                 return true; // Document ID found
             }
+            documentIds.findNext();
         }
         return false; // Document ID not found
-    }
-
-    // Resize the document IDs array
-    private void resize() {
-        int newSize = documentIds.length * 2; // Double the array size
-        int[] newArray = new int[newSize];
-        System.arraycopy(documentIds, 0, newArray, 0, documentIds.length);
-        documentIds = newArray; // Assign the resized array
     }
 
     // Get the word
@@ -46,8 +35,10 @@ public class Word {
     // Print document IDs where the word appears
     public void printDocumentIds() {
         System.out.print("Word '" + wordText + "' appears in document IDs: ");
-        for (int i = 0; i < size; i++) {
-            System.out.print(documentIds[i] + " ");
+        documentIds.findFirst();
+        while (documentIds.retrieve() != null) {
+            System.out.print(documentIds.retrieve() + " ");
+            documentIds.findNext();
         }
         System.out.println();
     }
@@ -60,9 +51,8 @@ public class Word {
         // Loop through each word in the document
         for (String word : words) {
             // Check if the current word matches exactly with wordText (case-insensitive)
-            // Also ensure the word boundaries are considered (using space, punctuation, etc.)
             if (word.equalsIgnoreCase(wordText)) {
-                return true; // Word found alone
+                return true; // Word found
             }
         }
 
