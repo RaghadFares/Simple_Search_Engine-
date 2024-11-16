@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+// :)
 public class InvertedIndexTest {
     public static void main(String[] args) {
         // File paths for the dataset and stop words

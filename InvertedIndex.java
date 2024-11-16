@@ -1,3 +1,5 @@
+// ;)
+
 public class InvertedIndex {
     LinkedList<Word> words; // Linked list to store words and their document IDs
 
