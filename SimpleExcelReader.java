@@ -3,8 +3,15 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class SimpleExcelReader {
+    // Default file paths
+    private static final String DEFAULT_DATASET_FILE = "dataset.csv";
+    private static final String DEFAULT_STOPWORDS_FILE = "stop.txt";
 
-    // Method to read the dataset.csv and return an array of documents (document ID and content)
+    // Method to read the dataset.csv
+    public static String[][] readDataset() {
+        return readDataset(DEFAULT_DATASET_FILE);
+    }
+
     public static String[][] readDataset(String filePath) {
         try {
             File file = new File(filePath);
@@ -51,7 +58,11 @@ public class SimpleExcelReader {
         }
     }
 
-    // Method to read the stop.txt file and return stop words as an array
+    // Method to read the stop.txt
+    public static String[] readStopWords() {
+        return readStopWords(DEFAULT_STOPWORDS_FILE);
+    }
+
     public static String[] readStopWords(String filePath) {
         try {
             File file = new File(filePath);
@@ -85,50 +96,5 @@ public class SimpleExcelReader {
             e.printStackTrace();
             return new String[0]; // Return an empty array on error
         }
-    }
-
-    // Method to process documents and remove stop words manually (without collections)
-    public static void processDocuments(String[][] dataset, String[] stopWords) {
-        // Ensure dataset is not empty
-        if (dataset.length == 0) {
-            System.err.println("No valid documents found in dataset.");
-            return;
-        }
-
-        // Process each document manually
-        for (int i = 0; i < dataset.length; i++) {
-            try {
-                if (dataset[i][0] != null && !dataset[i][0].isEmpty() && dataset[i][1] != null && !dataset[i][1].isEmpty()) {
-                    int docId = Integer.parseInt(dataset[i][0]); // Document ID
-                    String content = dataset[i][1]; // Content of the document
-
-                    // Create Document object (Assume Document class is defined elsewhere)
-                    Document document = new Document(docId, content);
-
-                    // Remove stop words
-                    document.removeStopWords(stopWords);
-
-                    // Display processed document
-                    document.displayDocument();
-                } else {
-                    System.err.println("Skipping invalid document at index " + i);
-                }
-            } catch (NumberFormatException e) {
-                System.err.println("Invalid document ID format in line: " + dataset[i][0]);
-            }
-        }
-    }
-
-    // Main method for testing
-    public static void main(String[] args) {
-        String datasetFilePath = "dataset.csv"; // Path to your CSV file
-        String stopWordsFilePath = "stop.txt";   // Path to your stop words file
-
-        // Read the dataset and stop words
-        String[][] dataset = readDataset(datasetFilePath);
-        String[] stopWords = readStopWords(stopWordsFilePath);
-
-        // Process the documents
-        processDocuments(dataset, stopWords);
     }
 }
