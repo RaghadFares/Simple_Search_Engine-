@@ -1,8 +1,8 @@
-
+// the updated version :)
 public class LinkedList<T> implements List<T> {
     Node<T> head;    // Head of the list
     Node<T> current; // Pointer to the current node
-// our linkedlist :)
+    // our linkedlist :)
     // Constructor to initialize an empty list
     public LinkedList() {
         head = current = null;
@@ -46,7 +46,15 @@ public class LinkedList<T> implements List<T> {
             current.data = val;
         }
     }
-
+    public boolean exist(T x){
+        Node<T> p = head;
+        while (p != null){
+            if(p.data.equals(x))
+                return true;
+            p = p.next;
+        }
+        return false;
+    }
     // Inserts a new node after the current node
    /* public void insert(T val) {
         Node<T> tmp;
@@ -103,7 +111,7 @@ public class LinkedList<T> implements List<T> {
             }
         }
     }
-//----
+    //----
     // Display function to print all elements in the list
     public void display() {
         Node<T> temp = head; // Start from the head node
