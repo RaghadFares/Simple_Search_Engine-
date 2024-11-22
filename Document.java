@@ -1,7 +1,9 @@
 public class Document {
     int id; // Document ID
-    LinkedList<String> words; // LinkedList to store words in the document
-// :
+    // updated version
+    LinkedList<String> words;
+    static int count = 0;// LinkedList to store words in the document
+    // :
     // Constructor to initialize the document with an ID and content
     public Document(int id, String content) {
         this.id = id;
@@ -11,6 +13,10 @@ public class Document {
 
     // Method to process the document content
     private void processDocumentContent(String content) {
+
+        content = content.replaceAll("\'", " ");
+
+        content = content.replaceAll("-", " ");
         // Convert content to lowercase
         content = content.toLowerCase();
 
@@ -19,12 +25,17 @@ public class Document {
 
         // Split the content into words based on whitespace
         String[] wordArray = content.split("\\s+");
+        count+= wordArray.length;
 
         // Add words to the LinkedList
         for (String word : wordArray) {
-            words.insert(word);  // Use insert() to add word to the linked list
+            words.insert(word);
+
+            // Use insert() to add word to the linked list
         }
+
     }
+
 
     // Method to remove punctuation and non-alphanumeric characters
     private String removePunctuation(String text) {
@@ -56,7 +67,6 @@ public class Document {
         }
 
         // Update the LinkedList with the filtered words (without stop words)
-        words = filteredWords;
     }
 
     // Method to display the processed document content
