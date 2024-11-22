@@ -1,6 +1,7 @@
 public class Word {
     String wordText;              // The word itself
     LinkedList<Integer> documentIds; // LinkedList to store document IDs
+    // updated version
 
     // Constructor to initialize the word and document IDs
     public Word(String word) {
@@ -57,5 +58,12 @@ public class Word {
         }
 
         return false; // Word not found
+    }
+
+    public void display(){
+        System.out.println("Word " +wordText);
+        System.out.print("--> ");
+        documentIds.display();
+        System.out.println();
     }
 }
