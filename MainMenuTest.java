@@ -5,7 +5,7 @@ public class MainMenuTest {
     InvertedIndex invertedIndex;
     InvertedIndexBST invertedIndexBST;
     int tokens;
-
+    static int DocNum = 0;
     // Dataset and stop words loaded using SimpleExcelReader
     String[][] dataset;
     String[] stopWords;
@@ -32,7 +32,7 @@ public class MainMenuTest {
                 Document document = new Document(docId, content);
                 document.removeStopWords(stopWords); // Remove stop words
                 index.addDocument(document);
-
+                DocNum++;
                 // Add each word in the document to the inverted index
                 document.words.findFirst();
                 while (document.words.retrieve() != null) {
@@ -123,7 +123,8 @@ public class MainMenuTest {
                                 break;
 
                             case 4:
-                                System.out.println("Back to the main menu");
+                                System.out.println("Number of Documents: "+DocNum);
+                                index.displayAllDocuments();
                                 break;
 
                             default:
